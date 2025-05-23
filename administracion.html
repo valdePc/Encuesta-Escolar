@@ -205,6 +205,7 @@
           );
 
 if (res.ok) {
+  localStorage.setItem('encuestaCompletada', 'true');
   formulario.style.display = "none";
   document.getElementById("btnRegresar").style.display = "none";
   yaCompletado.style.display = "block";

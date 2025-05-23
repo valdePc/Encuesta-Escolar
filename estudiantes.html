@@ -228,9 +228,11 @@
           );
 
           const result = await response.json();
-          if (response.ok) {
-            formulario.style.display = "none";
-            yaCompletado.style.display = "block";
+          if (res.ok) {
+  localStorage.setItem('encuestaCompletada', 'true');
+  formulario.style.display = "none";
+  document.getElementById("btnRegresar").style.display = "none";
+  yaCompletado.style.display = "block";
           } else {
             alert("Error: " + (result.error?.message || "Desconocido"));
           }

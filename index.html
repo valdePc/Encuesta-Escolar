@@ -86,14 +86,23 @@
   </div>
 
   <script>
-    function redirigir() {
-      const rol = document.getElementById('rolSelect').value;
-      if (rol) {
-        window.location.href = rol;
-      } else {
-        alert('Por favor, seleccione una opción válida: Estudiante, Docente, Administrativo, Padres y/o Tutores o Freelancer.');
-      }
-    }
+
+function redirigir() {
+  const rol = document.getElementById('rolSelect').value;
+
+  // Verificar si ya respondió desde este navegador
+  if (localStorage.getItem('encuestaCompletada') === 'true') {
+    alert('Ya ha completado la encuesta desde este dispositivo.');
+    return;
+  }
+
+  if (rol) {
+    window.location.href = rol;
+  } else {
+    alert('Por favor, seleccione una opción válida: Estudiante, Docente, Administrativo, Padres y/o Tutores o Freelancer.');
+  }
+}
+
   </script>
 </body>
 </html>

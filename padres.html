@@ -161,9 +161,11 @@
             }
           );
 
-          if (response.ok) {
-            form.style.display = "none";
-            yaCompletado.style.display = "block";
+      if (res.ok) {
+  localStorage.setItem('encuestaCompletada', 'true');
+  formulario.style.display = "none";
+  document.getElementById("btnRegresar").style.display = "none";
+  yaCompletado.style.display = "block";
           } else {
             const err = await response.json();
             alert("Error: " + (err.error?.message || "Desconocido"));
