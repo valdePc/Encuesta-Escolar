@@ -32,7 +32,7 @@
       margin-top: 20px;
       font-weight: 600;
     }
-    input, select, textarea {
+    select {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
@@ -40,9 +40,6 @@
       border-radius: 6px;
       background: #f9f9f9;
       font-size: 15px;
-    }
-    textarea {
-      resize: vertical;
     }
     button {
       margin-top: 30px;
@@ -58,172 +55,45 @@
     button:hover {
       background-color: #154360;
     }
-    #formulario, #yaCompletado {
-      display: none;
-    }
   </style>
 </head>
 <body>
   <div class="container">
     <div id="introSection">
-      <h2>Encuesta para el Personal Escolar</h2>
+      <h2>Encuesta para la comunidad educativa y familias</h2>
       <p>
         Estimado/a colaborador/a:<br><br>
-        Esta encuesta tiene como propósito identificar los procesos académicos y administrativos que generan mayores dificultades en el ejercicio de sus funciones dentro del entorno escolar. El objetivo es analizar cómo dichas situaciones podrían ser optimizadas mediante la implementación de herramientas digitales que faciliten y mejoren la gestión educativa.<br><br>
-        Sus respuestas serán tratadas con estricta confidencialidad y utilizadas únicamente con fines de mejora institucional. Agradecemos de antemano su colaboración, la cual es fundamental para el desarrollo de soluciones efectivas que beneficien tanto al personal docente como al administrativo.
+        Esta encuesta tiene como propósito identificar los procesos académicos y administrativos 
+        que generan mayores dificultades en el ejercicio de sus funciones dentro del entorno escolar. 
+        El objetivo es analizar cómo dichas situaciones podrían ser optimizadas mediante la 
+        implementación de herramientas digitales que faciliten y mejoren la gestión educativa.<br><br>
+        Sus respuestas serán tratadas con estricta confidencialidad y utilizadas únicamente 
+        con fines de mejora institucional. Agradecemos de antemano su colaboración.
       </p>
-      <button onclick="mostrarFormulario()">Iniciar Encuesta</button>
-    </div>
 
-    <div id="formulario">
-      <h2>Formulario</h2>
-      <form id="encuestaForm">
-     
-        <label>Función que desempeña (docente, administrativo, técnico, etc.):</label>
-        <input type="text" name="Cargo">
+      <label for="rolSelect">¿Cuál es su perfil?</label>
+      <select id="rolSelect">
+        <option value="">Seleccione una opción</option>
+        <option value="estudiantes.html">Estudiante</option>
+        <option value="maestros.html">Docente</option>
+        <option value="administracion.html">Administrativo</option>
+        <option value="padres.html">Padres y/o Tutores</option>
+        <option value="freelancer.html">Freelancer</option>
+      </select>
 
-        <label>Área o nivel educativo en el que trabaja:</label>
-        <input type="text" name="Área">
-
-        <label>Describa brevemente sus principales responsabilidades laborales.</label>
-        <textarea name="Responsabilidades" rows="3"></textarea>
-
-        <label>¿Con qué frecuencia enfrenta dificultades relacionadas con el uso de herramientas tecnológicas en su trabajo?</label>
-        <select name="Dificultades">
-          <option value="">Seleccione una opción</option>
-          <option>Nunca</option>
-          <option>Rara vez</option>
-          <option>Ocasionalmente</option>
-          <option>Frecuentemente</option>
-          <option>Todos los días</option>
-        </select>
-
-        <label>¿Qué herramientas digitales utiliza actualmente para cumplir sus funciones?</label>
-        <textarea name="Herramientas" rows="2"></textarea>
-
-        <label>¿Considera que la comunicación entre los miembros del personal es efectiva?</label>
-        <select name="Comunicación">
-          <option value="">Seleccione una opción</option>
-          <option>Sí</option>
-          <option>No</option>
-          <option>A veces</option>
-        </select>
-
-        <label>Comentarios adicionales sobre la comunicación institucional:</label>
-        <textarea name="Comentarios_comunicacion" rows="2"></textarea>
-
-        <label>¿Tiene claridad sobre las fechas y actividades establecidas en el calendario escolar?</label>
-        <select name="Claridad">
-          <option value="">Seleccione una opción</option>
-          <option>Siempre</option>
-          <option>A veces</option>
-          <option>Rara vez</option>
-          <option>Nunca</option>
-        </select>
-
-        <label>¿Cómo evalúa la planificación y organización del calendario escolar?</label>
-        <select name="Planificación">
-          <option value="">Seleccione una opción</option>
-          <option>Excelente</option>
-          <option>Buena</option>
-          <option>Regular</option>
-          <option>Deficiente</option>
-        </select>
-
-        <label>Observaciones sobre la planificación del calendario:</label>
-        <textarea name="Comentarios_calendario" rows="2"></textarea>
-
-        <label>¿Qué mejoras tecnológicas considera necesarias en su centro educativo?</label>
-        <textarea name="Mejoras" rows="3"></textarea>
-
-        <label>¿Le gustaría recibir capacitación adicional? Indique las áreas de interés.</label>
-        <textarea name="Capacitación" rows="2"></textarea>
-
-        <label>¿Qué sugerencias podría aportar para mejorar su desempeño laboral y el clima institucional?</label>
-        <textarea name="Sugerencias" rows="3"></textarea>
-
-        <label>En caso de que se desarrolle una plataforma digital que facilite la planificación, organización y ejecución de sus tareas escolares, ¿estaría usted dispuesto/a a utilizarla en su labor diaria?</label>
-        <select name="Disposicion_Plataforma">
-          <option value="">Seleccione una opción</option>
-          <option>Sí, totalmente dispuesto/a</option>
-          <option>Tal vez, si es fácil de usar</option>
-          <option>No lo sé aún</option>
-          <option>No estaría interesado/a</option>
-        </select>
-
-        <button type="submit">Enviar respuestas</button>
-      </form>
-    </div>
-
-    <div id="yaCompletado">
-      <h2>¡Gracias por su participación!</h2>
-      <p>Ya ha completado esta encuesta. Sus respuestas han sido registradas exitosamente.</p>
+      <button type="button" onclick="redirigir()">Aceptar</button>
     </div>
   </div>
 
-<script>
-  const formulario = document.getElementById("formulario");
-  const yaCompletado = document.getElementById("yaCompletado");
-  const introSection = document.getElementById("introSection");
-
-  function mostrarFormulario() {
-    if (localStorage.getItem("encuestaCompletada") === "true") {
-      introSection.style.display = "none";
-      yaCompletado.style.display = "block";
-    } else {
-      introSection.style.display = "none";
-      formulario.style.display = "block";
-    }
-  }
-
-  document.getElementById("encuestaForm").addEventListener("submit", async function(e) {
-    e.preventDefault();
-    const form = e.target;
-    const data = {};
-    for (let element of form.elements) {
-      if (element.name) data[element.name] = element.value;
-    }
-
-    try {
-      const response = await fetch("https://api.airtable.com/v0/appADkJGRawXcjNis/resultados", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer patahEcqj3LsA9EtD.43ee32266f8b37c149d0a162bf4582bd0a72f50465c888157c83b20993fc2fe7"
-        },
-        body: JSON.stringify({
-          fields: {
-            respuesta1: data.Cargo,
-            respuesta2: data.Área,
-            respuesta3: data.Responsabilidades,
-            respuesta4: data.Dificultades,
-            respuesta5: data.Herramientas,
-            respuesta6: data.Comunicación,
-            respuesta7: data.Comentarios_comunicacion,
-            respuesta8: data.Claridad,
-            respuesta9: data.Planificación,
-            respuesta10: data.Comentarios_calendario,
-            respuesta11: data.Mejoras,
-            respuesta12: data.Capacitación,
-            respuesta13: data.Sugerencias,
-            respuesta14: data.Disposicion_Plataforma
-          }
-        })
-      });
-
-      if (response.ok) {
-        localStorage.setItem("encuestaCompletada", "true");
-        formulario.style.display = "none";
-        yaCompletado.style.display = "block";
+  <script>
+    function redirigir() {
+      const rol = document.getElementById('rolSelect').value;
+      if (rol) {
+        window.location.href = rol;
       } else {
-        alert("Error al enviar la encuesta. Intente nuevamente.");
+        alert('Por favor, seleccione una opción válida: Estudiante, Docente, Administrativo, Padres y/o Tutores o Freelancer.');
       }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("No se pudo conectar con el servidor.");
     }
-  });
-</script>
-
+  </script>
 </body>
 </html>

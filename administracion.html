@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Encuesta para Administración Escolar</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f4f6f8;
+      color: #2c3e50;
+    }
+    .container {
+      max-width: 850px;
+      margin: 40px auto;
+      padding: 30px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #1a5276;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: 600;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #f9f9f9;
+      font-size: 15px;
+    }
+    textarea { resize: vertical; }
+    button {
+      margin-top: 15px;
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button.back {
+      background-color: #ccc;
+      color: #2c3e50;
+    }
+    button.back:hover {
+      background-color: #bbb;
+    }
+    button.submit {
+      background-color: #1a5276;
+      color: white;
+    }
+    button.submit:hover {
+      background-color: #154360;
+    }
+    #yaCompletado {
+      display: none;
+      text-align: center;
+      margin-top: 30px;
+    }
+    #yaCompletado h2 {
+      color: #1a5276;
+    }
+  </style>
+</head>
+<body>
+    
+  <div class="container">
+    <h2>Encuesta para Administración Escolar</h2>
+<!-- Botón para regresar -->
+   <button type="button" class="back" id="btnRegresar" onclick="history.back()">Regresar</button>
+    <form id="encuestaForm">
+      <label>Cargo en la administración (director, secretario, coordinador, etc.):</label>
+      <input type="text" name="CargoAdmin" />
+
+      <label>Describa brevemente sus principales responsabilidades:</label>
+      <textarea name="Responsabilidades" rows="3"></textarea>
+
+      <label>¿Con qué frecuencia enfrenta dificultades con sistemas administrativos bases de datos en su trabajo.?</label>
+      <select name="Dificultades">
+        <option value="">Seleccione una opción</option>
+        <option>Nunca</option>
+        <option>Rara vez</option>
+        <option>Ocasionalmente</option>
+        <option>Frecuentemente</option>
+        <option>Todos los días</option>
+      </select>
+
+      <label>¿Qué herramientas administrativas y digitales utiliza actualmente?</label>
+      <textarea name="Herramientas" rows="2"></textarea>
+
+      <label>¿Considera efectiva la comunicación entre administración y docentes?</label>
+      <select name="ComunicacionDocentes">
+        <option value="">Seleccione una opción</option>
+        <option>Sí</option>
+        <option>No</option>
+        <option>A veces</option>
+      </select>
+
+      <label>Comentarios sobre esa comunicación:</label>
+      <textarea name="ComentariosComunicacion" rows="2"></textarea>
+
+      <label>¿Tiene claridad sobre los procedimientos y políticas institucionales?</label>
+      <select name="ClaridadPoliticas">
+        <option value="">Seleccione una opción</option>
+        <option>Siempre</option>
+        <option>A veces</option>
+        <option>Rara vez</option>
+        <option>Nunca</option>
+      </select>
+
+      <label>¿Cómo evalúa la eficiencia de los procesos administrativos?</label>
+      <select name="EvaluacionProcesos">
+        <option value="">Seleccione una opción</option>
+        <option>Excelente</option>
+        <option>Buena</option>
+        <option>Regular</option>
+        <option>Deficiente</option>
+      </select>
+
+      <label>Observaciones sobre los procesos administrativos:</label>
+      <textarea name="ObservacionesProcesos" rows="2"></textarea>
+
+      <label>¿Qué mejoras tecnológicas considera necesarias en la administración escolar?</label>
+      <textarea name="Mejoras" rows="3"></textarea>
+
+      <label>¿Le gustaría recibir capacitación adicional en herramientas administrativas? Áreas de interés:</label>
+      <textarea name="Capacitacion" rows="2"></textarea>
+
+      <label>¿Qué sugerencias tiene para optimizar sus tareas administrativas?</label>
+      <textarea name="Sugerencias" rows="3"></textarea>
+
+      <label>
+        En caso de desarrollarse una plataforma de gestión administrativa centralizada,
+        ¿estaría dispuesto/a a implementarla?
+      </label>
+      <select name="DisposicionPlataforma">
+        <option value="">Seleccione una opción</option>
+        <option>Sí, implementaría sin dudar</option>
+        <option>Tal vez, si es fácil de usar</option>
+        <option>No lo sé aún</option>
+        <option>No estaría interesado/a</option>
+      </select>
+
+      
+      <!-- Botón de envío -->
+      <button type="submit" class="submit">Enviar respuestas</button>
+    </form>
+
+    <div id="yaCompletado">
+      <h2>¡Gracias por participar!</h2>
+      <p>Sus respuestas han sido registradas exitosamente.</p>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const formulario   = document.getElementById("encuestaForm");
+      const yaCompletado = document.getElementById("yaCompletado");
+
+      formulario.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const data = {};
+        for (let el of formulario.elements) {
+          if (el.name) data[el.name] = el.value;
+        }
+
+        try {
+          const res = await fetch(
+            "https://api.airtable.com/v0/appADkJGRawXcjNis/administracion",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer patahEcqj3LsA9EtD.43ee32266f8b37c149d0a162bf4582bd0a72f50465c888157c83b20993fc2fe7"
+              },
+              body: JSON.stringify({
+                fields: {
+                  cargo_admin:            data.CargoAdmin,
+                  area_administrativa:    data.AreaAdmin,
+                  responsabilidades:      data.Responsabilidades,
+                  dificultades_sistemas:  data.Dificultades,
+                  herramientas_admin:     data.Herramientas,
+                  comunicacion_docentes:  data.ComunicacionDocentes,
+                  comentarios_comunicacion: data.ComentariosComunicacion,
+                  claridad_politicas:     data.ClaridadPoliticas,
+                  evaluacion_procesos:    data.EvaluacionProcesos,
+                  observaciones_procesos: data.ObservacionesProcesos,
+                  mejoras_tecnologicas:   data.Mejoras,
+                  capacitacion_interes:   data.Capacitacion,
+                  sugerencias:            data.Sugerencias,
+                  disposicion_plataforma: data.DisposicionPlataforma,
+                  fecha_envio:            new Date().toISOString()
+                }
+              })
+            }
+          );
+
+if (res.ok) {
+  formulario.style.display = "none";
+  document.getElementById("btnRegresar").style.display = "none";
+  yaCompletado.style.display = "block";
+} else {
+            const err = await res.json();
+            alert("Error: " + (err.error?.message || "Desconocido"));
+          }
+        } catch {
+          alert("No se pudo conectar con el servidor.");
+        }
+      });
+    });
+  </script>
+</body>
+</html>

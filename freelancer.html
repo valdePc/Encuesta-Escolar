@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Encuesta para Freelancers</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f4f6f8;
+      color: #2c3e50;
+    }
+    .container {
+      max-width: 850px;
+      margin: 40px auto;
+      padding: 30px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #1a5276;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: 600;
+    }
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #f9f9f9;
+      font-size: 15px;
+    }
+    textarea { resize: vertical; }
+
+    /* Grupo de checkboxes alineados */
+    .checkbox-group {
+      margin-top: 5px;
+      margin-left: 20px;
+    }
+    .checkbox-group > div {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .checkbox-group input[type="checkbox"] {
+      margin: 0 8px 0 0;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button.back {
+      background-color: #ccc;
+      color: #2c3e50;
+    }
+    button.back:hover {
+      background-color: #bbb;
+    }
+    button.submit {
+      background-color: #1a5276;
+      color: white;
+    }
+    button.submit:hover {
+      background-color: #154360;
+    }
+
+    #yaCompletado {
+      display: none;
+      text-align: center;
+      margin-top: 30px;
+    }
+    #yaCompletado h2 {
+      color: #1a5276;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Encuesta para Freelancers</h2>
+    <button type="button" class="back" id="btnRegresar" onclick="history.back()">Regresar</button>
+    <form id="encuestaForm">
+      <label>Materia o especialidad que impartes:</label>
+      <input type="text" name="especialidad" placeholder="Ej. Matemáticas, Inglés..." />
+
+      <label>1. ¿Con cuántos estudiantes trabajas regularmente?</label>
+      <input type="number" name="num_estudiantes" min="1" placeholder="Número aproximado" />
+
+      <label>2. Te gustaría gestionar digitalmente las asistencia y calificaciones y otras nececidades academicas de tus estudiantes:</label>
+      <select name="interes_gestion">
+        <option value="">Seleccione...</option>
+        <option>Muy de acuerdo</option>
+        <option>De acuerdo</option>
+        <option>Neutral</option>
+        <option>En desacuerdo</option>
+        <option>Muy en desacuerdo</option>
+      </select>
+
+      <label>3. ¿Qué funcionalidades serían más útiles? Selecciona todas las que apliquen:</label>
+      <div class="checkbox-group">
+        <div>
+          <input type="checkbox" name="funcionalidades" value="Registro de asistencia" id="f-asistencia">
+          <label for="f-asistencia">Registro de asistencia</label>
+        </div>
+        <div>
+          <input type="checkbox" name="funcionalidades" value="Calificaciones" id="f-calificaciones">
+          <label for="f-calificaciones">Calificaciones</label>
+        </div>
+        <div>
+          <input type="checkbox" name="funcionalidades" value="Programación de clases" id="f-programacion">
+          <label for="f-programacion">Programación de clases</label>
+        </div>
+        <div>
+          <input type="checkbox" name="funcionalidades" value="Mensajería con estudiantes" id="f-mensajeria">
+          <label for="f-mensajeria">Mensajería con estudiantes</label>
+        </div>
+        <div>
+          <input type="checkbox" name="funcionalidades" value="Notificaciones de tareas" id="f-notificaciones">
+          <label for="f-notificaciones">Notificaciones de tareas</label>
+        </div>
+      </div>
+
+      <label>4. ¿Con qué frecuencia usarías esta plataforma?</label>
+      <select name="frecuencia">
+        <option value="">Seleccione...</option>
+        <option>Diariamente</option>
+        <option>Semanalmente</option>
+        <option>Mensualmente</option>
+        <option>Sólo cuando sea necesario</option>
+      </select>
+
+      <label>5. ¿Qué tan importante consideras una herramienta así para tu trabajo?</label>
+      <select name="importancia">
+        <option value="">Seleccione...</option>
+        <option>Muy importante</option>
+        <option>Importante</option>
+        <option>Algo importante</option>
+        <option>Poco importante</option>
+        <option>Nada importante</option>
+      </select>
+
+      <button type="submit" class="submit">Enviar respuestas</button>
+    </form>
+
+    <div id="yaCompletado">
+      <h2>¡Gracias por participar!</h2>
+      <p>Sus respuestas han sido registradas exitosamente.</p>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const formulario   = document.getElementById("encuestaForm");
+      const yaCompletado = document.getElementById("yaCompletado");
+
+      formulario.addEventListener("submit", async e => {
+        e.preventDefault();
+        const data = {
+          especialidad: document.querySelector('[name="especialidad"]').value,
+          num_estudiantes: document.querySelector('[name="num_estudiantes"]').value,
+          interes_gestion: document.querySelector('[name="interes_gestion"]').value,
+          funcionalidades: Array.from(
+            document.querySelectorAll('input[name="funcionalidades"]:checked')
+          ).map(cb => cb.value),
+          frecuencia: document.querySelector('[name="frecuencia"]').value,
+          importancia: document.querySelector('[name="importancia"]').value
+        };
+
+        try {
+          const res = await fetch(
+            "https://api.airtable.com/v0/appADkJGRawXcjNis/freelancers",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer patahEcqj3LsA9EtD.43ee32266f8b37c149d0a162bf4582bd0a72f50465c888157c83b20993fc2fe7"
+              },
+body: JSON.stringify({
+  fields: {
+    // 1. Especialidad
+    especialidad_impartida: data.especialidad,
+
+    // 2. Número de estudiantes
+    cantidad_estudiantes: data.num_estudiantes,
+
+    // 3. Interés en gestionar digitalmente asistencia, calificaciones y otras necesidades
+    interes_gestion_academica: data.interes_gestion,
+
+    // 4. Funcionalidades seleccionadas (checkboxes)
+    funcionalidades_utiles: data.funcionalidades,
+
+    // 5. Frecuencia de uso esperada
+    frecuencia_uso: data.frecuencia,
+
+    // 6. Importancia de una herramienta educativa
+    importancia_herramienta: data.importancia,
+
+    // Fecha de envío
+    fecha_envio: new Date().toISOString()
+  }
+              })
+            }
+          );
+if (res.ok) {
+  formulario.style.display = "none";
+  document.getElementById("btnRegresar").style.display = "none";
+  yaCompletado.style.display = "block";
+}
+ else {
+            const err = await res.json();
+            alert("Error: " + (err.error?.message || "Desconocido"));
+          }
+        } catch {
+          alert("No se pudo conectar con el servidor.");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
